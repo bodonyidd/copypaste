@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Input Form</title>
+	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css">
+    <!-- <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico"> -->
+	<style>
+		
+		.buttons{display: inline-block; margin-right: 20px;}
+	</style>
+</head>
+<body class="p-0 m-0">
+	<h1>Input Form</h1>
+	<form method="POST" id="my-form" action="/" style="display: inline list-item;display: inline;" enctype="multipart/form-data">
+		<label for="userInput">Enter Text:</label>
+		<div class="buttons">
+			<input type="text" id="userInput" name="userInput" required >
+			<button type="submit" class="btn btn-info buttons">Submit</button>
+		</div>
+			<br> 
+			<input type="file" name="file">
+			<input type="submit" value="Upload">
+	</form>
+	<script>
+		// Get the form element
+		var form = document.getElementById('my-form');
+		
+		// Add an event listener to the form's submit event
+		form.addEventListener('submit', function(event) {
+		  // Prevent the form from being submitted
+		  event.preventDefault();
+		  
+		  // Get the form data
+		  var formData = {
+			'input_field': document.getElementById('userInput').value
+		  };
+		  if (formData['input_field'] === '') {
+				return;
+			}
+		  // Send an AJAX request to the Flask backend
+		  $.ajax({
+			type: 'POST',
+			url: '/',
+			data: JSON.stringify(formData),
+			contentType: 'application/json',
+			success: function(data) {
+			  console.log('Form submitted successfully!');
+			  location.reload();
+			}
+		  });
+		});
+	  </script>
+	<div class="buttons">
+		<button onclick="location.reload()" class="btn btn-primary">Refresh</button>
+	</div>
+	<br>
+	{% if output %}
+	<table>
+		<tbody>
+			{% for item in output%}
+			<tr>
+				<td>{{ item }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	  </table>
+	<div class="buttons">
+		<a href="/delete" class="btn btn-danger">Delete all DB content</a>
+	</div>
+	{% endif %}
+
+	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js">
+	</script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Input Form</title>
+</head>
+<body>
+	<h1>Input Form</h1>
+	<form>
+		<label for="userInput">Enter Text:</label>
+		<input type="text" id="userInput" name="userInput">
+		<button type="submit" onclick="submitForm()">Submit</button>
+	</form>
+	<br>
+	<p id="output"></p>
+	
+	<script>
+		function submitForm() {
+			event.preventDefault(); // prevent form submission
+			var input = document.getElementById("userInput").value; // get input value
+			document.getElementById("output").innerHTML = input; // display input value
+		}
+	</script>
+</body>
+</html>
